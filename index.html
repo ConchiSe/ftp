@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>HTTP</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+				<h1>Servicio FTP</h1>
+				
+				<p>2º SMR Servicios en Red</p>
+				
+				
+				
+				</section>
+				<section>
+					<h3>Introducción</h3>
+				<p>El servicio FTP (File Transfer Protocol) es el protocolo estándar para la transferencia de ficheros en las redes TCP/IP.
+				Es uno de los protocolos más antiguos de Internet. Hoy en día está siendo desplazado por el protocolo HTTP que
+				también admite la posibilidad de transferir ficheros y es más fácil de utilizar.
+				</p>
+				
+				
+				
+				
+				</section>
+				<section>
+				<p>FTP se considera un protocolo no seguro ya que las comunicaciones entre el cliente y el servidor
+				no están cifradas. Para suplir este inconveniente se puede utilizar sFTP, FTP sobre conexión SSH, o bien FTPS,
+				que es FTP Seguro. FTPS permite utilizar SSL/TLS para cifrar las comunicaciones entre los clientes
+				y los servidores, el servidor debe contar con un certificado digital.<br/>
+					<b><font color="blue">Ejercicio 1:</font></b><br/>
+				Busca en Internet diferencia entre sFTP y FTPs
+				
+						
+					</p>
+					
+				
+				
+				</section>
+				<section>
+				<p> El protocolo FTP permite a los usuarios conectarse al servidor por medio de un cliente FTP
+				para descargar o subir archivos a un servidor FTP. Para ello, FTP utiliza dos puertos. El puerto
+				21 TCP se utiliza para la transferencia de comandos, permitiendo controlar todo el proceso de transferencia.
+				El puerto 20 TCP se utiliza para la transferencia de datos, es decir, para la descarga o subidad de 
+				los ficheros a transferir.
+					</p>
+					
+				
+				
+				</section>
+				<section>
+				<p> 
+				Existen dos tipos de clientes FTP, los clientes con interfaz de usuario en modo texto,
+				de los cuales el más utilizado es <i>ftp</i> que se incluye por defecto en los sistemas operativos 
+				más comunes.<br/>
+				<b><font color="blue">Ejercicio 2:</font></b><br/>
+				Busca en Internet los comandos/órdenes estándar que permiten controlar el proceso de transferencia
+				de ficheros con el cliente ftp. Incluye el nombre del comando, su función y un ejemplo
+				
+				</p>
+					
+				
+				
+				</section>
+					<section>
+				
+							<p> 
+				Por otro lado, encontramos los clientes con interfaz de usuario gráfica. En este tipo de programas
+				no es necesario que los usuarios se aprendan los comandos FTP, ya que todas las acciones se llevan
+				a cabo por medio del uso del ratón. <i>Filezilla</i> es uno de los más utilizados.
+				
+
+ 
+				</p>
+					
+				
+				
+				</section>
+					<section>
+						<h3>Modos de conexión</h3>
+				<p> 
+				A la hora de establecer una conexión con un servidor FTP existen dos formas de realizarla: <br/>
+				- <i>Modo activo:</i> Es el funcionamiento por defecto. El cliente se conecta al servidor por el puerto 21 TCP
+				Una vez conectado, el cliente puede mandarle comandos al servidor. A la hora de realizar una transferencia, el cliente se pone 
+				a la escucha en un puerto TCP local y se lo comunica al servidor. Es ahora el servidor el que abre la conexión
+				al puerto indicado por el cliente. Es por este segundo canal por donde se transfieren los datos.
+                
+				</p>
+								
+				</section>
+							
+				
+				<section>
+				<p> 
+				 - <i>Modo pasivo:</i>  El cliente se conecta al servidor por el puerto 21 TCP, del mismo modo que en el
+				 modo activo. Una vez conectado, el cliente ya puede mandarle comando al servidor por este puerto. Ahora el cliente le manda el 
+				 comando PASV al servidor para entrar en modo pasivo. En respuesta, el servidor le manda al cliente un número de puerto TCP mayor que 1023.
+				 Es ahora, el cliente el que abrirá una conexión nueva al servidor utilizando este puerto indicado para la transferencia de datos. En este modo,
+				 el servidor no utiliza el puerto 20 TCP</p>
+							
+				
+				</section>
+					<section>
+				<p> 
+				
+				<a href="https://www.elblogtic.com/permitir-ftp-pasivo-con-iptables">Esquemas de conexión</a><br/>
+                La principal diferencia entre estos dos modos es quién abre la conexión para la transferencia de datos. Si tanto el cliente como el servidor
+                se encuentran conectados a la red de forma directa, en el caso de Internet con direcciones IP públicas; es indiferente utilizar un modo u otro.
+                Pero si el cliente se encuentra detrás de un cortafuegos, el servidor no podrá abrir la conexión con el cliente, impidiendo la posibilidad de utilizar
+                el modo activo. En estos escenarios hay que utilizar el modo pasivo.
+                
+				</p>
+							
+				
+				</section>
+				
+					<section>
+				<h3>Tipos de usuarios</h3>
+				<p> 
+				- <i>Anónimos:</i> Estos se conectan por medio de una cuenta genérica, normalmente denominada <i>anonymous</i>
+				sin contraseña y pueden descargar ficheros del servidor. Este tipo de uusairos no suelen tener
+				permiso ni para subir ficheros ni para modificar los ficheros existentes, es decir, sólo tienen permisos
+				de lectura. Se utiliza para poner ficheros a disposición del público en general para que se los puedan
+				descargar.
+   
+
+				</p>
+					</section>
+							
+			<section>
+			
+				<p> 
+				- <i>Usuarios estándar:</i> Estos usuarios acceden utilizando una cuenta de usuario local del sistema operativo
+				donde se esté ejecutando el servidor. Cuentan con un nombre y una contraseña. Los usuarios acceden por defecto a su 
+				directorio <i>home</i> personal, donde tendrán permisos de lectura y escritura sobre los ficheros y directorios de 
+				sus cuentas. Por lo tanto, estos usuarios podrán descargar y subir ficheros.
+ 
+				</p>
+							
+				
+			
+				</section>
+									
+			<section>
+			
+				<p> 
+				- <i>Usuarios virtuales:</i> Estos usuarios también cuentan con un nombre de usuario y una contraseña
+				par conectarse al servidor, pero al contrario que los usuarios estándar, estos no disponen de una cuenta
+				local en el sistema operativo del servidor. El servidor FTP controla estos usuarios almacenándolos
+				en una base de datos propia. A la hora de acceder, estos usuarios disponen de un directorio específico
+				en el servidor donde podrán descargar y subir ficheros.
+ 
+				</p>
+							
+				
+			
+				</section>
+				<section>
+			
+				<p> Sube los Ejercicios 1 y 2 a la plataforma
+					
+				
+ 
+				</p>
+							
+				
+			
+				</section>
+		
+			
+			
+				 	 		
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
